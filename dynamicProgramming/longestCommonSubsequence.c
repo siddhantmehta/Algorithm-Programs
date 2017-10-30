@@ -83,8 +83,9 @@ int main()
 	char *subsequence=(char *)malloc(sizeof(char)*dpTable[lent][lens]+1);
 	i=lent;
 	j=lens;
-	int temp=3;
-	subsequence[dpTable[lent][lens]]='\0';
+	int temp=dpTable[lent][lens];
+	subsequence[temp]='\0';
+	temp--;
 	while(i>0 || j>0)
 	{
 		if(s[j-1]==t[i-1])
