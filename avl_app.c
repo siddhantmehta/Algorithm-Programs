@@ -1127,7 +1127,7 @@ struct Node *findLowestCommonAncestor(int x,int y)
 int findMaxGapBetweenTwoNumbers(int x,int y)
 {
 	struct Node *t=findLowestCommonAncestor(x,y);	
-	return t->max-t->min;
+	return (t->max - t->min);
 }
 int findMinGapBetweenTwoNumbers(int x,int y)
 {
