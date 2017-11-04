@@ -610,7 +610,7 @@ int computeSumBetweenTwoNumbers(int x,int y)
 	return abs(prefixSumOfY-prefixSumOfX);
 }
 
-float computeAverageBetweenTwoNumbers(x,y)
+float computeAverageBetweenTwoNumbers(int x,int y)
 {
 	int sum=computeSumBetweenTwoNumbers(x,y);
 	int numberOfNodes=numberOfElementsBetweenTwoNumbers(x,y,1,1);
@@ -1104,12 +1104,108 @@ int findMinGap(struct Node *t)
 {
 	return (t->minGap);
 }
+struct Node *findLowestCommonAncestor(int x,int y)
+{
+	struct Node *t=start;
+	while(t!=NULL)
+	{
+		if((x==t->number && y>t->number)|| (x<t->number && y==t->number) || (x<t->number && y>t->number))
+		{
+			break;
+		}
+		else if(x>t->number)
+		{
+			t=t->right;
+		}
+		else if(y<t->number)
+		{
+			t=t->left;
+		}
+	}
+	return t;
+}
+int findMaxGapBetweenTwoNumbers(int x,int y)
+{
+	struct Node *t=findLowestCommonAncestor(x,y);	
+	return t->max-t->min;
+}
+int findMinGapBetweenTwoNumbers(int x,int y)
+{
+	struct Node *t=findLowestCommonAncestor(x,y);	
+	struct Node *nodeX,*nodeY,*j;
+	j=t;
+	while(j!=NULL)
+	{
+		if(j->number == x)
+		{
+			nodeX=j;
+			break;
+		}
+		else if(j->number > x)
+		{
+			j=j->left;
+		}
+		else
+		{
+			j=j->right;
+		}
+	}
+	j=t;
+	while(j!=NULL)
+	{
+		if(j->number == y)
+		{
+			nodeY=j;
+			break;
+		}
+		else if(j->number > y)
+		{
+			j=j->left;
+		}
+		else
+		{
+			j=j->right;
+		}
+	}
+	printf("%d\n",nodeY->number );
+	int minGapX,minGapY;
+	j=nodeX;
+	minGapX=98765;
+	if(j->right!=NULL && j->right->minGap!=-1)
+	{
+		minGapX=j->right->minGap;
+	}
+	while(j!=t)
+	{
+		if(j->minGap!=-1 && minGapX>j->minGap)
+		{
+			minGapX=j->minGap;
+		}
+		j=j->parent;
+	}
+	j=nodeY;
+	minGapY=98765;
+	if(j->left!=NULL && j->left->minGap!=-1)
+	{
+		minGapY=j->left->minGap;
+	}
+	while(j!=t)
+	{
+		if(j->minGap!=-1 && minGapY>j->minGap)
+		{
+			minGapY=j->minGap;
+		}
+		j=j->parent;
+	}
+	if(minGapX<minGapY) return minGapX;
+	else return minGapY;
+}
 int main()
 {
 	int ch,num,height,count;
 	while(1)
 	{
-		/*printf("1. Add node\n");
+		printf("1. Add node\n");
 		printf("2. Remove node\n");
 		printf("3. Pre-Order traverse\n");
 		printf("4. In-Order traverse\n");
@@ -1118,12 +1214,14 @@ int main()
 		printf("7. Node rank\n");
 		printf("8. Find rank\n");
 		printf("9. numberOfElementsBetweenTwoNumbers\n");
-		printf("10. Find prefix sum\n");*/
+		printf("10. Find prefix sum\n");
 		printf("11. Find sum of numbers between two numbers\n");
 		printf("12. Find average of numbers between two numbers\n");
 		printf("13. Find max gap\n");
 		printf("14. Find min gap\n");
-		printf("15. Exit\n");
+		printf("15. Find max gap between two numbers\n");
+		printf("16. Find min gap between two numbers\n");
+		printf("17. Exit\n");
 		printf("Enter your choice:");
 		scanf("%d",&ch);
 		if(ch==1)
@@ -1131,6 +1229,22 @@ int main()
 			printf("Enter a number:");
 			scanf("%d",&num);
 			addNode(num);
+			/*addNode(49);
+			addNode(37);
+			addNode(89);
+			addNode(13);
+			addNode(41);
+			addNode(53);
+			addNode(100);
+			addNode(7);
+			addNode(19);
+			addNode(39);
+			addNode(51);
+			addNode(71);
+			addNode(90);
+			addNode(150);
+			addNode(60);
+			addNode(82);*/
 		}
 		if(ch==2)
 		{
@@ -1212,6 +1326,24 @@ int main()
 			printf("Min gap of the tree :%d\n",findMinGap(start));
 		}
 		if(ch==15)
+		{
+			int x,y;
+			printf("Enter first number :\n");
+			scanf("%d",&x);
+			printf("Enter second number :\n");
+			scanf("%d",&y);
+			printf("Max gap between two numbers :%d\n",findMaxGapBetweenTwoNumbers(x,y));
+		}
+		if(ch==16)
+		{
+			int x,y;
+			printf("Enter first number :\n");
+			scanf("%d",&x);
+			printf("Enter second number :\n");
+			scanf("%d",&y);
+			printf("Min gap between two numbers :%d\n",findMinGapBetweenTwoNumbers(x,y));			
+		}
+		if(ch==17)
 		{
 			break;
 		}
