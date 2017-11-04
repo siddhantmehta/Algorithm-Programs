@@ -92,10 +92,13 @@ int main()
 		}
 		else
 		{
-			j--;
+			if (dpTable[i+1][j]>dpTable[i][j-1])
+				i=i+1;
+			else
+				j=j-1;
 		}
 	}
-	while(j>=0)
+	while(j>=0 && temp>=0)
 	{
 		subsequence[temp]=s[j];
 		j--;
