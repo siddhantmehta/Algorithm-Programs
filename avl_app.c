@@ -1167,7 +1167,6 @@ int findMinGapBetweenTwoNumbers(int x,int y)
 			j=j->right;
 		}
 	}
-	printf("%d\n",nodeY->number );
 	int minGapX,minGapY;
 	j=nodeX;
 	minGapX=98765;
