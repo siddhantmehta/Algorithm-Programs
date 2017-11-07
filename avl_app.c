@@ -1126,16 +1126,19 @@ struct Node *findLowestCommonAncestor(int x,int y)
 }
 int findMaxGapBetweenTwoNumbers(int x,int y)
 {
-	struct Node *t=findLowestCommonAncestor(x,y);	
-	return (t->max - t->min);
-}
-int findMinGapBetweenTwoNumbers(int x,int y)
-{
-	struct Node *t=findLowestCommonAncestor(x,y);	
-	struct Node *nodeX,*nodeY,*j;
+	struct Node *t=findLowestCommonAncestor(x,y);
+	struct Node *nodeX,*nodeY,*j,*temp;
 	j=t;
+	temp=t;
+	int min=98765,p;
 	while(j!=NULL)
 	{
+		p=j->number-x;
+		if(p>0 && p<min)
+		{
+			min=p;
+			temp=j;
+		}
 		if(j->number == x)
 		{
 			nodeX=j;
@@ -1150,9 +1153,17 @@ int findMinGapBetweenTwoNumbers(int x,int y)
 			j=j->right;
 		}
 	}
+	if(j==NULL) nodeX=temp;
 	j=t;
+	min=98765;
 	while(j!=NULL)
 	{
+		p=y-j->number;
+		if(p>0 && p<min)
+		{
+			min=p;
+			temp=j;
+		}
 		if(j->number == y)
 		{
 			nodeY=j;
@@ -1167,6 +1178,63 @@ int findMinGapBetweenTwoNumbers(int x,int y)
 			j=j->right;
 		}
 	}
+	if(j==NULL)	nodeY=temp;
+	return nodeY->number - nodeX->number;
+}
+int findMinGapBetweenTwoNumbers(int x,int y)
+{
+	struct Node *t=findLowestCommonAncestor(x,y);	
+	struct Node *nodeX,*nodeY,*j,*temp;
+	j=t;
+	temp=t;
+	int min=98765,p;
+	while(j!=NULL)
+	{
+		p=j->number-x;
+		if(p>0 && p<min)
+		{
+			min=p;
+			temp=j;
+		}
+		if(j->number == x)
+		{
+			nodeX=j;
+			break;
+		}
+		else if(j->number > x)
+		{
+			j=j->left;
+		}
+		else
+		{
+			j=j->right;
+		}
+	}
+	if(j==NULL) nodeX=temp;
+	j=t;
+	while(j!=NULL)
+	{
+		p=y-j->number;
+		if(p>0 && p<min)
+		{
+			min=p;
+			temp=j;
+		}
+		if(j->number == y)
+		{
+			nodeY=j;
+			break;
+		}
+		else if(j->number > y)
+		{
+			j=j->left;
+		}
+		else
+		{
+			j=j->right;
+		}
+	}
+	if(j==NULL)	nodeY=temp;
 	int minGapX,minGapY;
 	j=nodeX;
 	minGapX=98765;
@@ -1225,10 +1293,10 @@ int main()
 		scanf("%d",&ch);
 		if(ch==1)
 		{
-			printf("Enter a number:");
+			/*printf("Enter a number:");
 			scanf("%d",&num);
-			addNode(num);
-			/*addNode(49);
+			addNode(num);*/
+			addNode(49);
 			addNode(37);
 			addNode(89);
 			addNode(13);
@@ -1243,7 +1311,7 @@ int main()
 			addNode(90);
 			addNode(150);
 			addNode(60);
-			addNode(82);*/
+			addNode(82);
 		}
 		if(ch==2)
 		{
