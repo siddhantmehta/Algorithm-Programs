@@ -1,0 +1,16 @@
+Excercise-problem/max6-2.c - O(n)						
+Doubly Linked List					
+Binary Heap/ Tree
+Stack
+Queue
+Heap Sort by build heap						
+Binomial Heap
+Fibonacci Heaps
+Dijkstra's
+Prim's
+Kruskal's
+smallest sub-array containing all terms			(not giving min. sub-array which is at the end)
+bucket sort						(don't know to create a bucket)
+rank analogy for majority - majority-3.c
+rank of array						(does not work for general case)	
+MDS				 
